@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package proto;
 
-import "proto/google/api/annotations.proto";
+import "stalk-proto/google/api/annotations.proto";
 
 option go_package = "github.com/peake100/stalkforecaster-go/proto";
 
