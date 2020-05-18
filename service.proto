@@ -28,6 +28,9 @@ message Ticker {
   // 12 values, it is assumed the remaining values are 0. The server will reject a
   // ticker with less than 12 values
   repeated int32 prices = 3;
+
+  // The current price period on the target island.
+  int32 current_period = 4;
 }
 
 // Price info for a single price period.
@@ -41,15 +44,19 @@ message PricePeriod {
 
 // Price info for a series of prices.
 message PricesSummary {
-  // The minimum guaranteed price for the parent. This is the highest minimum price
-  // we can say will happen with 100% certainty.
+  // The absolute minimum price of the parent object.
   int32 min = 1;
   // The potential maximum price of the parent object.
   int32 max = 2;
+  // The maximum guaranteed price for the parent. This is the minimum highest price
+  // we can say will happen with 100% certainty.
+  int32 guaranteed = 6;
   // The price periods during which ``min`` might occur.
   repeated int32 min_periods = 3;
   // The price periods during which ``max`` might occur.
   repeated int32 max_periods = 4;
+  // The price periods during which ``guaranteed`` might occur.
+  repeated int32 guaranteed_periods = 5;
 }
 
 // Spike info for weeks, weeks and patterns.
@@ -70,6 +77,8 @@ message PotentialWeek {
   repeated PricePeriod prices = 3;
   // A summary of the prices in this fluctuation.
   PricesSummary prices_summary = 4;
+  // As prices summary, but for the future and current price periods only.
+  PricesSummary prices_future = 6;
   // A summary of whether there will be a spike and what periods it will occur on.
   SpikeRange spike = 5;
 }
@@ -77,10 +86,17 @@ message PotentialWeek {
 // Describes the potential course a price pattern may take given the user's price
 // ticker.
 message PotentialPattern {
+  // The price pattern
   PricePatterns pattern = 1;
+  // THe chance this price pattern will occur
   double chance = 2;
+  // A summary of the high anf low prices of this pattern
   PricesSummary prices_summary = 3;
+  // As prices summary, but for the future and current price periods only.
+  PricesSummary prices_future = 6;
+  // The range a spike might occur in
   SpikeRange spike = 4;
+  // A list of potential price permutations this pattern might produce.
   repeated PotentialWeek potential_weeks = 5;
 }
 
@@ -112,8 +128,13 @@ message ForecastSpikes {
 
 // A forecast for prices on your island
 message Forecast {
+  // A summary of the high and low prices for the island.
   PricesSummary prices_summary = 1;
+  // As prices summary, but for the future and current price periods only.
+  PricesSummary prices_future = 4;
+  // Information about spike likelihood and potential periods.
   ForecastSpikes spikes = 2;
+  // Detailed breakdown of each potential price pattern.
   repeated PotentialPattern patterns = 3;
 }
 
