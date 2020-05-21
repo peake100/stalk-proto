@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package proto;
 
-import "stalk-proto/google/api/annotations.proto";
-
 option go_package = "github.com/peake100/stalkforecaster-go/proto";
 
 // Enum of the price patterns that can occur in animal crossing.
@@ -136,16 +134,4 @@ message Forecast {
   ForecastSpikes spikes = 2;
   // Detailed breakdown of each potential price pattern.
   repeated PotentialPattern patterns = 3;
-}
-
-
-// The forecasting service definition.
-service StalkForecaster {
-  // Returns a turnip price forecast for supplied price ticker.
-  rpc ForecastPrices (Ticker) returns (Forecast) {
-    option (google.api.http) = {
-      post: "/forecast"
-      body: "*"
-    };
-  }
 }
