@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package proto;
 
-option go_package = "github.com/peake100/stalkforecaster-go/proto";
+option go_package = "github.com/peake100/stalkforecaster-go/stalkproto";
 
 // Enum of the price patterns that can occur in animal crossing.
 enum PricePatterns {
