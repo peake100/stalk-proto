@@ -150,6 +150,8 @@ message ReqForecastChart {
   Forecast forecast = 2;
   // desired image format
   ImageFormat format = 3;
+  // hex value for the background coloe of the chart or empty for transparent
+  string color_background = 4;
 }
 
 // Response message with a rendered svg chart.
