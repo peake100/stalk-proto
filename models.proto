@@ -136,7 +136,7 @@ message Forecast {
   repeated PotentialPattern patterns = 3;
   // Score for how hot the investment opportunity is on an island. Used to compare
   // forecasts across islands.
-  float heat = 5;
+  int32 heat = 5;
 }
 
 // Supported chart image formats
